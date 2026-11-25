@@ -1,3 +1,29 @@
+.headerEntry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #61666b;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* 宿主深色主题（ThemePresenter 打在 body 上的 data-ds-dark-theme）。 */
+:global(body[data-ds-dark-theme]) .headerEntry {
+  color: #cfd3d6;
+}
+
+.headerEntry:hover {
+  background: var(--dsw-alias-interactive-bg-hover);
+}
+
 .replyEntry {
   display: inline-grid;
   place-items: center;

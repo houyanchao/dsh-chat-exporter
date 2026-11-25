@@ -26,17 +26,3 @@ export const ACTIVE_COLOR_PALETTE: readonly PaletteEntry[] = [
 
 /** 默认激活色：调色板第一项黑色（原 deepseek 平台默认为 blue，经确认改为 black）。 */
 export const DEFAULT_ACTIVE_COLOR_ID = 'black'
-
-/**
- * 调色板条目 → CSS color 值（原 activeColorPaletteToCss）。
- * @param entry - 调色板条目。
- * @returns 纯色 hex 或 linear-gradient 字符串。
- */
-export function paletteEntryToCss(entry: PaletteEntry | undefined): string {
-  if (entry === undefined) return ''
-  if (entry.solid !== undefined) return entry.solid
-  if (entry.gradient === undefined) return ''
-  const { angle, stops } = entry.gradient
-  const stopStr = stops.map(([offset, color]) => `${color} ${Math.round(offset * 100)}%`).join(', ')
-  return `linear-gradient(${angle}deg, ${stopStr})`
-}

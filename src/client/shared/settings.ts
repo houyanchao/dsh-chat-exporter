@@ -1,114 +1,76 @@
-/**
- * 插件全局设置存储：集中承载原扩展 chrome.storage.local 上的各功能开关
- * （smartInputPlatformSettings / promptButtonPlatformSettings / smartEnterMode /
- * smartEnterToastCount / preventAutoScrollEnabled 等）。DSH 单平台，
- * 原按平台分键的设置折叠为单布尔。localStorage + Bus + storage 事件跨标签页同步。
- */
-import { registerStorageSync } from './storageSync.ts'
 import { Bus } from '../ui/bus.ts'
 import { DEFAULT_ACTIVE_COLOR_ID } from './palette.ts'
+import { registerStorageSync } from './storageSync.ts'
 
-/** 智能回车发送模式（原 SMART_ENTER_MODES）。 */
-export type SmartEnterMode = 'doubleEnter' | 'ctrlEnter' | 'shiftEnter'
+interface ExportOptions {
+  readonly formatId: string
+  readonly themeId: string
+  readonly showTime: boolean
+  readonly showConversationTime: boolean
+}
 
-/** 全部插件设置（缺省值与原扩展一致）。 */
-export interface PluginSettings {
-  /** 提示词按钮开关（原 promptButtonPlatformSettings[id] !== false，默认开）。 */
-  readonly promptButtonEnabled: boolean
-  /** 智能回车开关（原 smartInputPlatformSettings[id] === true，默认关）。 */
-  readonly smartEnterEnabled: boolean
-  /** 智能回车发送模式（原 smartEnterMode，默认 doubleEnter）。 */
-  readonly smartEnterMode: SmartEnterMode
-  /** 换行提示 toast 已展示次数（原 smartEnterToastCount，上限 5 次）。 */
-  readonly smartEnterToastCount: number
-  /** 阻止发送后跳底（原 preventAutoScrollEnabled !== false，默认开）。 */
-  readonly preventAutoScrollEnabled: boolean
-  /** 追问功能开关（原 quickAskEnabled !== false，默认开）。 */
-  readonly quickAskEnabled: boolean
-  /** 时间轴激活色 id（原 timelineActiveColors[platform]，默认调色板第一项 black）。 */
-  readonly activeColorId: string
-  /** 对话导出开关（原 conversationExportPlatformSettings[id] !== false，默认开）。 */
+interface Settings {
   readonly conversationExportEnabled: boolean
   readonly messageScreenshotEnabled: boolean
   readonly screenshotScale: number
-  readonly exportOptions?: {
-    readonly formatId: string
-    readonly themeId: string
-    readonly showTime: boolean
-    readonly showConversationTime: boolean
-  }
-  /** 消息旁时间标签开关（原 chatTimeLabelEnabled !== false，默认开）。 */
-  readonly chatTimeLabelEnabled: boolean
-  /** 闪记开关（原 aitNotepadEnabled !== false，默认开）。 */
-  readonly notepadEnabled: boolean
-  /** 显示时间轴开关（原 timelinePlatformSettings[id] !== false，默认开）。 */
-  readonly timelineEnabled: boolean
-  /** ↑/↓ 键节点导航开关（原 arrowKeysNavigationEnabled !== false，默认开）。 */
-  readonly arrowKeysNavEnabled: boolean
-  /** AI 回复完成弹窗提醒（原 timelineAICompleteToastEnabled !== false，默认开）。 */
-  readonly aiCompleteToastEnabled: boolean
-  /** AI 回复完成声音提醒（原 timelineAICompleteSoundEnabled === true，默认关）。 */
-  readonly aiCompleteSoundEnabled: boolean
-  /** 侧栏收藏面板开关（原 sidebarStarredPlatformSettings[id] !== false，默认开）。 */
-  readonly starredPanelEnabled: boolean
-  /** 从工作区原生列表隐藏已收藏的整段对话。 */
-  readonly hideStarredFromNativeList: boolean
-  /** 公式复制：LaTeX 开关（原 formulaLatexEnabled !== false，默认开）。 */
-  readonly formulaLatexEnabled: boolean
-  /** 公式复制：MathML 开关（原 formulaMathMLEnabled === true，默认关）。 */
-  readonly formulaMathMLEnabled: boolean
-  /** 公式复制：LaTeX 复制格式 id（原 formulaFormat，默认 none）。 */
-  readonly formulaFormat: string
+  readonly activeColorId: string
+  readonly exportOptions?: ExportOptions
 }
 
-const DEFAULTS: PluginSettings = {
-  promptButtonEnabled: true,
-  smartEnterEnabled: false,
-  smartEnterMode: 'doubleEnter',
-  smartEnterToastCount: 0,
-  preventAutoScrollEnabled: true,
-  quickAskEnabled: true,
-  activeColorId: DEFAULT_ACTIVE_COLOR_ID,
+const STORAGE_KEY = 'dsh.chat-export.settings'
+const LEGACY_KEY = 'dsh.timeline.settings'
+const defaults: Settings = {
   conversationExportEnabled: true,
   messageScreenshotEnabled: true,
   screenshotScale: 2,
-  chatTimeLabelEnabled: true,
-  notepadEnabled: true,
-  timelineEnabled: true,
-  arrowKeysNavEnabled: true,
-  aiCompleteToastEnabled: true,
-  aiCompleteSoundEnabled: false,
-  starredPanelEnabled: true,
-  hideStarredFromNativeList: false,
-  formulaLatexEnabled: true,
-  formulaMathMLEnabled: false,
-  formulaFormat: 'none',
+  activeColorId: DEFAULT_ACTIVE_COLOR_ID,
 }
 
-const STORAGE_KEY = 'dsh.timeline.settings'
+function decode(raw: string): Settings {
+  const value = JSON.parse(raw) as Partial<Settings> | null
+  if (!value || typeof value !== 'object') return defaults
+  const options = value.exportOptions
+  const scale = value.screenshotScale
+  return {
+    conversationExportEnabled: value.conversationExportEnabled !== false,
+    messageScreenshotEnabled: value.messageScreenshotEnabled !== false,
+    screenshotScale: typeof scale === 'number' && [1, 2, 3, 4].includes(scale) ? scale : defaults.screenshotScale,
+    activeColorId: typeof value.activeColorId === 'string' ? value.activeColorId : defaults.activeColorId,
+    ...(options && typeof options.formatId === 'string' && typeof options.themeId === 'string' ? {
+      exportOptions: {
+        formatId: options.formatId, themeId: options.themeId,
+        showTime: options.showTime !== false, showConversationTime: options.showConversationTime !== false,
+      },
+    } : {}),
+  }
+}
 
-function load(): PluginSettings {
+/** Seed this plugin's own key once using just the export preferences from Timeline. */
+function load(): Settings {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw !== null) {
-      const parsed = JSON.parse(raw) as Partial<PluginSettings>
-      return { ...DEFAULTS, ...parsed }
-    }
-  } catch { /* 损坏数据回退默认 */ }
-  return DEFAULTS
+    if (raw !== null) return decode(raw)
+    const legacy = localStorage.getItem(LEGACY_KEY)
+    const initial = legacy === null ? defaults : decode(legacy)
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(initial)) } catch { /* storage may be read-only */ }
+    return initial
+  } catch { return defaults }
 }
 
-const bus = new Bus<PluginSettings>(load())
-
+const bus = new Bus<Settings>(defaults)
 registerStorageSync(STORAGE_KEY, () => { bus.set(load()) })
 
-/** 插件设置 API。 */
 export const settingsStore = {
   subscribe: bus.subscribe,
-  get: (): PluginSettings => bus.get(),
-  set(patch: Partial<PluginSettings>): void {
-    const next = { ...bus.get(), ...patch }
+  get: (): Settings => bus.get(),
+  set(patch: Partial<Settings>): void {
+    let current = bus.get()
+    try {
+      const latest = localStorage.getItem(STORAGE_KEY)
+      if (latest !== null) current = decode(latest)
+    } catch { /* keep the in-memory preferences */ }
+    const next = { ...current, ...patch }
     bus.set(next)
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)) } catch { /* 忽略 */ }
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(next)) } catch { /* keep the in-memory changes */ }
   },
 }

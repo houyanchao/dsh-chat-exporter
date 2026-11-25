@@ -9,11 +9,10 @@ import { detectDarkTheme, observeTheme } from '../shared/theme.ts'
 import { findConversationDOM } from '../shared/conversationDom.ts'
 import { settingsStore } from '../shared/settings.ts'
 import type { ChatHistory } from '../shared/history.ts'
-import { panelModal } from '../panelModal/bus.ts'
+import { showSettings } from '../settings/dialog.ts'
 import { toast } from '../ui/toast.tsx'
 import { tooltip } from '../ui/tooltip.tsx'
 import { SettingsIcon } from '../ui/SettingsIcon.tsx'
-import timelineCss from '../timeline/timeline.module.css'
 import { Bus } from '../ui/bus.ts'
 import {
   CE_DEFAULT_FORMAT, CE_DEFAULT_THEME, CE_FORMATS, CE_THEMES, ceFormatText, ceSanitizeFilename,
@@ -163,7 +162,7 @@ export function ExportAction({ sessionId, useChat, useSession, useSessions, reso
     <>
       <span ref={scopeAnchor} hidden />
       {settings.conversationExportEnabled
-        ? <button type="button" className={`${timelineCss.headerBtn} ${css.headerEntry}`} disabled={open} aria-label={t('export.label')}
+        ? <button type="button" className={css.headerEntry} disabled={open} aria-label={t('export.label')}
             onMouseEnter={e => {
               if (!open) tooltip.show('ce-export-btn', e.currentTarget, texts.buttonTooltip, { placement: 'bottom', theme: 'inverse' })
             }}
@@ -495,7 +494,7 @@ function MessageSelection({ request, scopeAnchor, t, texts, defaultThemeId, titl
 
 
   return createPortal(
-    <div className={css.selection} data-dsh-timeline-selection="" data-dsh-timeline-ui="" data-theme={dark ? 'dark' : 'light'}>
+    <div className={css.selection} data-dsh-chat-export-selection="" data-dsh-chat-export-ui="" data-theme={dark ? 'dark' : 'light'}>
       <section className={css.dock} ref={dockRef} aria-label={actionLabel} style={layout === null
         ? undefined : { left: layout.center, width: layout.width, bottom: layout.bottom }}>
         <div className={css.heading}>
@@ -504,7 +503,7 @@ function MessageSelection({ request, scopeAnchor, t, texts, defaultThemeId, titl
               <strong>{actionLabel}</strong>
               <button type="button" className={`${css.iconButton} ${css.settingsButton}`}
                 title={t('export.actionSettings')} aria-label={t('export.actionSettings')} aria-haspopup="dialog"
-                onClick={() => { panelModal.show('export') }}>
+                onClick={showSettings}>
                 <SettingsIcon />
               </button>
             </div>
@@ -577,7 +576,7 @@ function MessageSelection({ request, scopeAnchor, t, texts, defaultThemeId, titl
       </div> : null}
 
       {layout !== null && layout.extraScrollSpace > 0
-        ? createPortal(<div className={css.spacer} data-dsh-timeline-ui="" aria-hidden style={{ height: layout.extraScrollSpace }} />, layout.flow)
+        ? createPortal(<div className={css.spacer} data-dsh-chat-export-ui="" aria-hidden style={{ height: layout.extraScrollSpace }} />, layout.flow)
         : null}
 
       {layout?.markers.map(marker => {
