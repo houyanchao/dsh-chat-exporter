@@ -1,0 +1,6 @@
+url: https://github.com/houyanchao/dsh-chat-export
+name: houyanchao/dsh-chat-export
+category: session
+description:
+  en: Export selected questions and replies as Markdown, TXT, JSON, CSV, PNG or PDF, or capture them in a screenshot that preserves the chat layout.
+  zh: DSH 提效插件：导出与截图插件，勾选提问和回复，导出为 Markdown、TXT、JSON、CSV、PNG 或 PDF，也可按聊天页原貌生成截图。

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "对话导出与截图",
+    "description": "导出和截图插件，导出为 Markdown、TXT、JSON、CSV、PNG 或 PDF，也可生成高清截图。"
+  }
+}
