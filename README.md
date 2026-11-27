@@ -30,19 +30,26 @@ dsh-chat-export 把 [dsh-timeline](https://github.com/houyanchao/dsh-timeline) �
 
 ## 📦 安装
 
-安装好 DSH CLI 和 pnpm 后，在终端运行以下命令。
+### 安装方式 1（客户端）
 
-```bash
-dsh plugin --profile web add https://github.com/houyanchao/dsh-chat-export/archive/refs/heads/main.tar.gz
-dsh web
+在 [DeepSeek Harness](https://www.deepseek.com/harness/) 客户端打开「插件」→「添加插件」，粘贴下面的仓库地址，点击「安装」。
+
+```text
+https://github.com/houyanchao/dsh-chat-export
 ```
 
-> [!TIP]
-> 如果从源码运行 DSH，可以在 DSH 源码仓库根目录将命令开头的 `dsh` 换成 `pnpm dsh`。
+![DeepSeek Harness 客户端中的「插件」页面、「添加插件」按钮和输入框](./docs/install-client.png)
+
+### 安装方式 2（通过命令行从 GitHub 安装）
+
+```bash
+# 安装 dsh-chat-export 插件
+dsh plugin --profile web add https://github.com/houyanchao/dsh-chat-export/archive/refs/heads/main.tar.gz
+```
 
 ## ⭐ 支持一下
 
-如果你用这个插件整理笔记或分享对话，欢迎把它推荐给朋友，或在 GitHub 上点个 Star。[项目主页](https://github.com/houyanchao/dsh-chat-export)
+如果 dsh-chat-export 好用，欢迎给个🌟，帮助更多人发现它！
 
 ## 📄 许可证
 

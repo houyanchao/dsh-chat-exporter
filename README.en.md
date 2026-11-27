@@ -30,19 +30,26 @@ When dsh-timeline is active, Timeline handles exports and screenshots. Disabling
 
 ## 📦 Installation
 
-With the DSH CLI and pnpm installed, run the following commands.
+### Method 1 (desktop client)
 
-```bash
-dsh plugin --profile web add https://github.com/houyanchao/dsh-chat-export/archive/refs/heads/main.tar.gz
-dsh web
+In the [DeepSeek Harness](https://www.deepseek.com/harness/) client, open **Plugins → Add plugin**, paste the repository URL below, then click **Install**.
+
+```text
+https://github.com/houyanchao/dsh-chat-export
 ```
 
-> [!TIP]
-> If you run DSH from source, run these commands from the root of the DSH checkout and replace the leading `dsh` with `pnpm dsh`.
+![The Plugins page, the Add plugin button and the installation field in the DeepSeek Harness client](./docs/install-client.png)
+
+### Method 2 (install from GitHub with the CLI)
+
+```bash
+# Install dsh-chat-export
+dsh plugin --profile web add https://github.com/houyanchao/dsh-chat-export/archive/refs/heads/main.tar.gz
+```
 
 ## ⭐ Support
 
-If this plugin helps you keep notes or share conversations, share it with a friend or give it a star on [GitHub](https://github.com/houyanchao/dsh-chat-export).
+If dsh-chat-export is useful to you, give it a 🌟 to help others discover it!
 
 ## 📄 License
 
