@@ -128,7 +128,7 @@ export function useSelectionLayout(
     window.addEventListener('scroll', schedule, { capture: true, passive: true })
     window.addEventListener('resize', schedule)
     const mutations = new MutationObserver(records => {
-      if (records.some(record => !(record.target instanceof Element && record.target.closest('[data-dsh-chat-export-selection]')))) schedule()
+      if (records.some(record => !(record.target instanceof Element && record.target.closest('[data-dsh-chat-exporter-selection]')))) schedule()
     })
     mutations.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['hidden'] })
     return () => {

@@ -1,6 +1,6 @@
 import { getFontEmbedCSS, toCanvas } from './vendor/html-to-image.cjs'
 
-const OMIT = 'input, textarea, select, script, style, link, iframe, object, embed, video, [hidden], [role="toolbar"], [data-turn-tail], [data-dsh-chat-export-ui], [data-dsh-timeline-ui]'
+const OMIT = 'input, textarea, select, script, style, link, iframe, object, embed, video, [hidden], [role="toolbar"], [data-turn-tail], [data-dsh-chat-exporter-ui], [data-dsh-timeline-ui]'
 const MAX_EDGE = 16000
 const MAX_AREA = 32_000_000
 const MAX_SLICES = 30

@@ -1,4 +1,4 @@
-export declare const NS = "dshChatExport";
+export declare const NS = "dshChatExporter";
 export declare const zh: {
     readonly 'common.cancel': "取消";
     readonly 'export.label': "导出";

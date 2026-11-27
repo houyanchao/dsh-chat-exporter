@@ -1,5 +1,5 @@
 {
-  "name": "dsh-chat-export",
+  "name": "dsh-chat-exporter",
   "version": "1.0.0",
   "description": "导出和截图插件，导出为 Markdown、TXT、JSON、CSV、PNG 或 PDF，也可生成高清截图。",
   "keywords": [
@@ -11,13 +11,13 @@
     "chat-export",
     "screenshot"
   ],
-  "homepage": "https://github.com/houyanchao/dsh-chat-export#readme",
+  "homepage": "https://github.com/houyanchao/dsh-chat-exporter#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/houyanchao/dsh-chat-export.git"
+    "url": "git+https://github.com/houyanchao/dsh-chat-exporter.git"
   },
   "bugs": {
-    "url": "https://github.com/houyanchao/dsh-chat-export/issues"
+    "url": "https://github.com/houyanchao/dsh-chat-exporter/issues"
   },
   "type": "module",
   "main": "lib/index.js",

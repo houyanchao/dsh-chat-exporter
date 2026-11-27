@@ -1,6 +1,6 @@
 <div align="center">
 
-# dsh-chat-export
+# dsh-chat-exporter
 
 **Chat export and screenshots for [DeepSeek Harness](https://deepseek-harness.github.io/deepseek-harness/)**
 
@@ -8,16 +8,16 @@ Message selection · Six export formats · Math rendering · High-resolution scr
 
 [![DSH Plugin](https://img.shields.io/badge/DeepSeek%20Harness-plugin-6128FF)](https://deepseek-harness.github.io/deepseek-harness/)
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](./LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/houyanchao/dsh-chat-export/pulls)
-[![GitHub stars](https://img.shields.io/github/stars/houyanchao/dsh-chat-export?style=social)](https://github.com/houyanchao/dsh-chat-export)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/houyanchao/dsh-chat-exporter/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/houyanchao/dsh-chat-exporter?style=social)](https://github.com/houyanchao/dsh-chat-exporter)
 
 [简体中文](./README.md) | **English**
 
 </div>
 
-## 📖 What is dsh-chat-export?
+## 📖 What is dsh-chat-exporter?
 
-dsh-chat-export brings the export and screenshot tools from [dsh-timeline](https://github.com/houyanchao/dsh-timeline) to DeepSeek Harness as a standalone plugin. Select a few replies and export them as Markdown for your notes, or capture a question and its worked solution in a single image that preserves the chat layout.
+dsh-chat-exporter brings the export and screenshot tools from [dsh-timeline](https://github.com/houyanchao/dsh-timeline) to DeepSeek Harness as a standalone plugin. Select a few replies and export them as Markdown for your notes, or capture a question and its worked solution in a single image that preserves the chat layout.
 
 When dsh-timeline is active, Timeline handles exports and screenshots. Disabling or uninstalling Timeline automatically restores this plugin. On first use, the plugin imports any existing Timeline export preferences from the current browser and then saves its own settings.
 
@@ -35,7 +35,7 @@ When dsh-timeline is active, Timeline handles exports and screenshots. Disabling
 In the [DeepSeek Harness](https://www.deepseek.com/harness/) client, open **Plugins → Add plugin**, paste the repository URL below, then click **Install**.
 
 ```text
-https://github.com/houyanchao/dsh-chat-export
+https://github.com/houyanchao/dsh-chat-exporter
 ```
 
 ![The Plugins page, the Add plugin button and the installation field in the DeepSeek Harness client](./docs/install-client.png)
@@ -43,13 +43,13 @@ https://github.com/houyanchao/dsh-chat-export
 ### Method 2 (install from GitHub with the CLI)
 
 ```bash
-# Install dsh-chat-export
-dsh plugin --profile web add https://github.com/houyanchao/dsh-chat-export/archive/refs/heads/main.tar.gz
+# Install dsh-chat-exporter
+dsh plugin --profile web add https://github.com/houyanchao/dsh-chat-exporter/archive/refs/heads/main.tar.gz
 ```
 
 ## ⭐ Support
 
-If dsh-chat-export is useful to you, give it a 🌟 to help others discover it!
+If dsh-chat-exporter is useful to you, give it a 🌟 to help others discover it!
 
 ## 📄 License
 

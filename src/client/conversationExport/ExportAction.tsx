@@ -494,7 +494,7 @@ function MessageSelection({ request, scopeAnchor, t, texts, defaultThemeId, titl
 
 
   return createPortal(
-    <div className={css.selection} data-dsh-chat-export-selection="" data-dsh-chat-export-ui="" data-theme={dark ? 'dark' : 'light'}>
+    <div className={css.selection} data-dsh-chat-exporter-selection="" data-dsh-chat-exporter-ui="" data-theme={dark ? 'dark' : 'light'}>
       <section className={css.dock} ref={dockRef} aria-label={actionLabel} style={layout === null
         ? undefined : { left: layout.center, width: layout.width, bottom: layout.bottom }}>
         <div className={css.heading}>
@@ -576,7 +576,7 @@ function MessageSelection({ request, scopeAnchor, t, texts, defaultThemeId, titl
       </div> : null}
 
       {layout !== null && layout.extraScrollSpace > 0
-        ? createPortal(<div className={css.spacer} data-dsh-chat-export-ui="" aria-hidden style={{ height: layout.extraScrollSpace }} />, layout.flow)
+        ? createPortal(<div className={css.spacer} data-dsh-chat-exporter-ui="" aria-hidden style={{ height: layout.extraScrollSpace }} />, layout.flow)
         : null}
 
       {layout?.markers.map(marker => {

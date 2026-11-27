@@ -20,5 +20,5 @@ export function bindStorageSync(ctx: ClientContext): void {
     }
     window.addEventListener('storage', sync)
     return () => { window.removeEventListener('storage', sync) }
-  }, 'dsh-chat-export: storage sync')
+  }, 'dsh-chat-exporter: storage sync')
 }

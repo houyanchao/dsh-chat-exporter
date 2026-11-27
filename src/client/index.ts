@@ -20,35 +20,35 @@ import { bindTheme } from './shared/theme.ts'
 
 declare module '@deepseek-ai/dsh-client-ui-slots' {
   interface LocaleNamespaceMap {
-    dshChatExport: ExportKey
+    dshChatExporter: ExportKey
   }
 }
 
 export const inject = ['slots', 'locale', 'sessions', 'theme', 'uiConversation']
 
 export function apply(ctx: Context): void {
-  whenTimelineInactive(ctx, { name: 'dsh-chat-export', inject, apply: activate })
+  whenTimelineInactive(ctx, { name: 'dsh-chat-exporter', inject, apply: activate })
 }
 
 function activate(ctx: Context): void {
   bindTheme(ctx)
   bindStorageSync(ctx)
-  ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'dsh-chat-export: dictionaries')
+  ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'dsh-chat-exporter: dictionaries')
   ctx.slots.inject('shell.overlay', () => ctx.slots.register({
     name: 'shell.overlay',
-    id: 'dsh-chat-export-overlay',
+    id: 'dsh-chat-exporter-overlay',
     locale: NS,
   }, ExportOverlay))
   ctx.slots.inject('settings.general.item', () => ctx.slots.register({
     name: 'settings.general.item',
-    id: 'dsh-chat-export',
+    id: 'dsh-chat-exporter',
     locale: NS,
   }, ExportSettings))
   ctx.slots.inject(
     'conversation.chat.assistant-actions',
     () => ctx.slots.register({
       name: 'conversation.chat.assistant-actions',
-      id: 'dsh-chat-export-reply',
+      id: 'dsh-chat-exporter-reply',
       locale: NS,
     }, AssistantExportActions),
   )
@@ -57,7 +57,7 @@ function activate(ctx: Context): void {
     'conversation.session.header.actions',
     () => ctx.slots.register({
       name: 'conversation.session.header.actions',
-      id: 'dsh-chat-export',
+      id: 'dsh-chat-exporter',
       order: 41,
       locale: NS,
       inject: () => ({

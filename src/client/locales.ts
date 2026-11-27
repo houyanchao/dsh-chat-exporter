@@ -1,4 +1,4 @@
-export const NS = 'dshChatExport'
+export const NS = 'dshChatExporter'
 
 export const zh = {
   'common.cancel': '取消',

@@ -1,3 +1,3 @@
 - insert:
-    - id: dsh-chat-export
-      name: dsh-chat-export
+    - id: dsh-chat-exporter
+      name: dsh-chat-exporter

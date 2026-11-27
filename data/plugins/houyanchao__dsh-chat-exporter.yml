@@ -1,5 +1,5 @@
-url: https://github.com/houyanchao/dsh-chat-export
-name: houyanchao/dsh-chat-export
+url: https://github.com/houyanchao/dsh-chat-exporter
+name: houyanchao/dsh-chat-exporter
 category: session
 description:
   en: Export selected questions and replies as Markdown, TXT, JSON, CSV, PNG or PDF, or capture them in a screenshot that preserves the chat layout.

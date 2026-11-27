@@ -1,6 +1,6 @@
 <div align="center">
 
-# dsh-chat-export
+# dsh-chat-exporter
 
 **[DeepSeek Harness](https://deepseek-harness.github.io/deepseek-harness/) 对话导出与截图插件**
 
@@ -8,16 +8,16 @@
 
 [![DSH Plugin](https://img.shields.io/badge/DeepSeek%20Harness-plugin-6128FF)](https://deepseek-harness.github.io/deepseek-harness/)
 [![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](./LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/houyanchao/dsh-chat-export/pulls)
-[![GitHub stars](https://img.shields.io/github/stars/houyanchao/dsh-chat-export?style=social)](https://github.com/houyanchao/dsh-chat-export)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/houyanchao/dsh-chat-exporter/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/houyanchao/dsh-chat-exporter?style=social)](https://github.com/houyanchao/dsh-chat-exporter)
 
 **简体中文** | [English](./README.en.md)
 
 </div>
 
-## 📖 dsh-chat-export 是什么？
+## 📖 dsh-chat-exporter 是什么？
 
-dsh-chat-export 把 [dsh-timeline](https://github.com/houyanchao/dsh-timeline) 的导出和截图功能做成了独立插件。想把几条回复整理进笔记，可以勾选后导出 Markdown。想分享一段带公式的推导，可以把选中的提问和回复按聊天页样式截成一张图。
+dsh-chat-exporter 把 [dsh-timeline](https://github.com/houyanchao/dsh-timeline) 的导出和截图功能做成了独立插件。想把几条回复整理进笔记，可以勾选后导出 Markdown。想分享一段带公式的推导，可以把选中的提问和回复按聊天页样式截成一张图。
 
 如果同时启用 dsh-timeline，导出和截图会由 Timeline 接管。停用或卸载 Timeline 后，本插件会自动恢复。首次使用时，插件会从当前浏览器读取已有的 Timeline 导出偏好，之后独立保存设置。
 
@@ -35,7 +35,7 @@ dsh-chat-export 把 [dsh-timeline](https://github.com/houyanchao/dsh-timeline) �
 在 [DeepSeek Harness](https://www.deepseek.com/harness/) 客户端打开「插件」→「添加插件」，粘贴下面的仓库地址，点击「安装」。
 
 ```text
-https://github.com/houyanchao/dsh-chat-export
+https://github.com/houyanchao/dsh-chat-exporter
 ```
 
 ![DeepSeek Harness 客户端中的「插件」页面、「添加插件」按钮和输入框](./docs/install-client.png)
@@ -43,13 +43,13 @@ https://github.com/houyanchao/dsh-chat-export
 ### 安装方式 2（通过命令行从 GitHub 安装）
 
 ```bash
-# 安装 dsh-chat-export 插件
-dsh plugin --profile web add https://github.com/houyanchao/dsh-chat-export/archive/refs/heads/main.tar.gz
+# 安装 dsh-chat-exporter 插件
+dsh plugin --profile web add https://github.com/houyanchao/dsh-chat-exporter/archive/refs/heads/main.tar.gz
 ```
 
 ## ⭐ 支持一下
 
-如果 dsh-chat-export 好用，欢迎给个🌟，帮助更多人发现它！
+如果 dsh-chat-exporter 好用，欢迎给个🌟，帮助更多人发现它！
 
 ## 📄 许可证
 
