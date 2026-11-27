@@ -292,7 +292,7 @@ function MessageSelection({ request, scopeAnchor, t, texts, defaultThemeId, titl
       onClose()
     }
   }, [byKey, selected, running, onClose, t])
-  useEffect(() => () => {
+  useLayoutEffect(() => () => {
     historyOperation.current?.abort()
     operation.current?.abort()
   }, [])
@@ -416,7 +416,7 @@ function MessageSelection({ request, scopeAnchor, t, texts, defaultThemeId, titl
         }
         if (isImageBased) {
           const { CEPngExporter } = await import('./pngExporter.ts')
-          const renderer = new CEPngExporter()
+          const renderer = new CEPngExporter(signal)
           signal.throwIfAborted()
           if (formatId === 'png') return await renderer.export(job, themeId, texts)
           const { CEPdfExporter } = await import('./pdfExporter.ts')

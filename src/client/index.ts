@@ -1,4 +1,5 @@
 import type { Context } from '@deepseek-ai/cordis'
+import { whenTimelineInactive } from './whenTimelineInactive.ts'
 import type { SessionId } from '@deepseek-ai/dsh-client-connection/client'
 import type {} from '@deepseek-ai/dsh-api-session-controller/client'
 import type {} from '@deepseek-ai/dsh-client-ui-renderer/client'
@@ -26,6 +27,10 @@ declare module '@deepseek-ai/dsh-client-ui-slots' {
 export const inject = ['slots', 'locale', 'sessions', 'theme', 'uiConversation']
 
 export function apply(ctx: Context): void {
+  whenTimelineInactive(ctx, { name: 'dsh-chat-export', inject, apply: activate })
+}
+
+function activate(ctx: Context): void {
   bindTheme(ctx)
   bindStorageSync(ctx)
   ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'dsh-chat-export: dictionaries')

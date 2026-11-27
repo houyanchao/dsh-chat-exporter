@@ -11,7 +11,7 @@ Select individual questions and replies in the DeepSeek Harness web client and s
 - **Capture the original layout.** Choose **Screenshot** below a reply, select questions and answers, then copy or download a PNG at 1× to 4×. Very long captures can use a lower resolution to fit into a single image.
 - **Manage preferences.** Open the gear in the selection panel, or go to DSH **Settings → General**. You can toggle export and screenshot actions independently. The plugin remembers your last export options and screenshot scale. On first use, it imports existing export preferences from Timeline in the same browser.
 
-If you also use Timeline with its built-in export and screenshot actions, you can turn them off in Timeline and enable them in this plugin to keep one set of buttons.
+While dsh-timeline is running, Timeline handles exports and screenshots and this plugin pauses. Disabling or uninstalling Timeline automatically restores this plugin with its saved preferences.
 
 ## Install
 

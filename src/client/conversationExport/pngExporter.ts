@@ -93,14 +93,22 @@ export class CEPngExporter {
   private formulaCapable = false
   private formulaImages = new Map<string, FormulaEntry | null>()
 
+  private readonly signal?: AbortSignal
+
+  constructor(signal?: AbortSignal) {
+    this.signal = signal
+  }
+
   /** 导出 PNG（原 export）。 */
   async export(job: ExportJob, themeId: string, texts: CeTexts): Promise<Blob> {
     const canvas = await this.renderCanvas(job, themeId, texts)
+    this.signal?.throwIfAborted()
     return await this.canvasToBlob(canvas)
   }
 
   /** 渲染整张长图到 canvas（原 renderCanvas，供 PNG / PDF 复用）。 */
   async renderCanvas(job: ExportJob, themeId: string, texts: CeTexts): Promise<HTMLCanvasElement> {
+    this.signal?.throwIfAborted()
     this.texts = texts
     const theme = ceGetTheme(themeId)
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -115,6 +123,7 @@ export class CEPngExporter {
       ...turn.user.images, ...turn.assistant.images, ...(inlineImages.get(turn) ?? []),
     ]))
 
+    this.signal?.throwIfAborted()
     // 仅在导出内容实际包含公式时探测公式渲染能力
     const hasFormulas = job.turns.some(turn => this.collectFormulas(turn.assistant.markdown).length > 0)
     this.formulaCapable = hasFormulas ? await this.probeFormulaRendering() : false
@@ -122,6 +131,7 @@ export class CEPngExporter {
       ? await this.preloadFormulas(job)
       : new Map()
 
+    this.signal?.throwIfAborted()
     // 构建绘制操作（含测量高度）
     const headerBlock = this.buildHeader(measureCtx, job)
     const bodyOps = this.buildBodyOps(measureCtx, job, imageMap, theme, inlineImages)
@@ -934,39 +944,40 @@ export class CEPngExporter {
 
     const map = new Map<string, LoadedImage>()
     await Promise.all(Array.from(srcs).map(async (src) => {
-      const result = await this.loadImage(src)
-      map.set(src, result)
+      const img = await this.loadImage(src, this.IMAGE_LOAD_TIMEOUT, 'anonymous')
+      map.set(src, img ? { element: img, width: img.naturalWidth, height: img.naturalHeight } : { element: null })
     }))
     return map
   }
 
-  private loadImage(src: string): Promise<LoadedImage> {
-    return new Promise((resolve) => {
+  private loadImage(src: string, timeout: number, crossOrigin?: 'anonymous'): Promise<HTMLImageElement | null> {
+    return new Promise((resolve, reject) => {
+      this.signal?.throwIfAborted()
       const img = new Image()
-      let settled = false
-      const finish = (value: LoadedImage): void => {
-        if (settled) return
-        settled = true
+      const cleanup = (): void => {
+        clearTimeout(timer)
+        img.onload = null
+        img.onerror = null
+        this.signal?.removeEventListener('abort', abort)
+      }
+      const abort = (): void => {
+        cleanup()
+        img.removeAttribute('src')
+        reject(this.signal?.reason)
+      }
+      const finish = (value: HTMLImageElement | null): void => {
+        cleanup()
         resolve(value)
       }
-
-      const timer = setTimeout(() => { finish({ element: null }) }, this.IMAGE_LOAD_TIMEOUT)
-
-      img.crossOrigin = 'anonymous'
-      img.onload = () => {
-        clearTimeout(timer)
-        finish({ element: img, width: img.naturalWidth, height: img.naturalHeight })
-      }
-      img.onerror = () => {
-        clearTimeout(timer)
-        finish({ element: null })
-      }
-
+      const timer = setTimeout(() => { finish(null) }, timeout)
+      this.signal?.addEventListener('abort', abort, { once: true })
+      if (crossOrigin) img.crossOrigin = crossOrigin
+      img.onload = () => { finish(img) }
+      img.onerror = () => { finish(null) }
       try {
         img.src = src
       } catch {
-        clearTimeout(timer)
-        finish({ element: null })
+        finish(null)
       }
     })
   }
@@ -987,6 +998,7 @@ export class CEPngExporter {
       test.toDataURL() // 若画布被污染会抛出 SecurityError
       return true
     } catch {
+      this.signal?.throwIfAborted()
       return false
     }
   }
@@ -1087,22 +1099,8 @@ export class CEPngExporter {
         + '</div></foreignObject></svg>'
 
     const url = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgString)}`
-    return await new Promise((resolve) => {
-      const img = new Image()
-      let settled = false
-      const finish = (value: FormulaEntry | null): void => {
-        if (!settled) { settled = true; resolve(value) }
-      }
-      const timer = setTimeout(() => { finish(null) }, 5000)
-      img.onload = () => { clearTimeout(timer); finish({ element: img, width, height }) }
-      img.onerror = () => { clearTimeout(timer); finish(null) }
-      try {
-        img.src = url
-      } catch {
-        clearTimeout(timer)
-        finish(null)
-      }
-    })
+    const element = await this.loadImage(url, 5000)
+    return element ? { element, width, height } : null
   }
 
   // ==================== Canvas 工具 ====================

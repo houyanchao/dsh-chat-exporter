@@ -46,6 +46,8 @@ export declare class CEPngExporter {
     private texts;
     private formulaCapable;
     private formulaImages;
+    private readonly signal?;
+    constructor(signal?: AbortSignal);
     /** 导出 PNG（原 export）。 */
     export(job: ExportJob, themeId: string, texts: CeTexts): Promise<Blob>;
     /** 渲染整张长图到 canvas（原 renderCanvas，供 PNG / PDF 复用）。 */
