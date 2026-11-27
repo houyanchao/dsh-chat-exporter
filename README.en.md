@@ -1,39 +1,49 @@
-# Chat Export & Screenshots · dsh-chat-export
+<div align="center">
 
-[简体中文](./README.md)
+# dsh-chat-export
 
-Select individual questions and replies in the DeepSeek Harness web client and save them as a document or image. This standalone plugin brings over the export and screenshot tools from [dsh-timeline](https://github.com/houyanchao/dsh-timeline).
+**Chat export and screenshots for [DeepSeek Harness](https://deepseek-harness.github.io/deepseek-harness/)**
 
-## Usage
+Message selection · Six export formats · Math rendering · High-resolution screenshots
 
-- **Export a conversation.** Choose **Export** in the conversation header and select messages. Choosing **Export** below a reply preselects that reply. **Select all** loads earlier messages when available. You can stop the history load.
-- **Choose a format.** Export Markdown, TXT, JSON, CSV, PNG or PDF. The export time and conversation timestamps are optional. PNG and PDF offer four color themes and render math. For PDF, choose **Save as PDF** in the browser print dialog.
-- **Capture the original layout.** Choose **Screenshot** below a reply, select questions and answers, then copy or download a PNG at 1× to 4×. Very long captures can use a lower resolution to fit into a single image.
-- **Manage preferences.** Open the gear in the selection panel, or go to DSH **Settings → General**. You can toggle export and screenshot actions independently. The plugin remembers your last export options and screenshot scale. On first use, it imports existing export preferences from Timeline in the same browser.
+[![DSH Plugin](https://img.shields.io/badge/DeepSeek%20Harness-plugin-6128FF)](https://deepseek-harness.github.io/deepseek-harness/)
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](./LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/houyanchao/dsh-chat-export/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/houyanchao/dsh-chat-export?style=social)](https://github.com/houyanchao/dsh-chat-export)
 
-While dsh-timeline is running, Timeline handles exports and screenshots and this plugin pauses. Disabling or uninstalling Timeline automatically restores this plugin with its saved preferences.
+[简体中文](./README.md) | **English**
 
-## Install
+</div>
 
-With the DSH CLI and pnpm installed, run:
+## 📖 What is dsh-chat-export?
 
-```sh
+dsh-chat-export brings the export and screenshot tools from [dsh-timeline](https://github.com/houyanchao/dsh-timeline) to DeepSeek Harness as a standalone plugin. Select a few replies and export them as Markdown for your notes, or capture a question and its worked solution in a single image that preserves the chat layout.
+
+When dsh-timeline is active, Timeline handles exports and screenshots. Disabling or uninstalling Timeline automatically restores this plugin. On first use, the plugin imports any existing Timeline export preferences from the current browser and then saves its own settings.
+
+## ✨ Features
+
+- 📋 **Select individual messages** — Click **Export** in the conversation header to pick questions and replies. Clicking **Export** below a reply preselects it. **Select all** loads earlier messages as needed. Click **Stop loading** to stop at any point.
+- 📤 **Choose from six formats** — Export Markdown or TXT for notes, or JSON or CSV for further processing. PNG and PDF render math and offer four color themes. To save a PDF, choose **Save as PDF** in the browser print dialog.
+- 📸 **Capture the chat layout** — Click **Screenshot** below a reply, select messages, and choose a scale from 1× to 4×. Copy or download the resulting PNG. If the capture exceeds the size limit, the plugin reduces its resolution.
+- ⚙️ **Set export preferences** — Choose whether to include the export time and the time each question was asked. The plugin remembers the last format, color theme, timestamp options and screenshot scale. Open the gear in the selection panel or go to DSH **Settings → General** to toggle the export and screenshot actions independently.
+
+## 📦 Installation
+
+With the DSH CLI and pnpm installed, run the following commands.
+
+```bash
 dsh plugin --profile web add https://github.com/houyanchao/dsh-chat-export/archive/refs/heads/main.tar.gz
 dsh web
 ```
 
-## Local development
+> [!TIP]
+> If you run DSH from source, run these commands from the root of the DSH checkout and replace the leading `dsh` with `pnpm dsh`.
 
-Use Node.js 24.11 or later and run these commands in the root of this repository:
+## ⭐ Support
 
-```sh
-npm ci
-npm run typecheck
-npm run bundle
-npm pack
-dsh plugin --profile web add "$PWD/dsh-chat-export-0.1.0.tgz"
-```
+If this plugin helps you keep notes or share conversations, share it with a friend or give it a star on [GitHub](https://github.com/houyanchao/dsh-chat-export).
 
-## License
+## 📄 License
 
-[GPL-3.0-or-later](./LICENSE). The bundled libraries include the MIT licenses for [html-to-image](./src/client/conversationExport/vendor/LICENSE) and [Temml](./src/client/conversationExport/vendor/Temml-LICENSE).
+This project uses [GPL-3.0-or-later](./LICENSE). The package also includes the MIT licenses for [html-to-image](./src/client/conversationExport/vendor/LICENSE) and [Temml](./src/client/conversationExport/vendor/Temml-LICENSE).

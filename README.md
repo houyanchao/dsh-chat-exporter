@@ -1,39 +1,49 @@
-# 对话导出与截图 · dsh-chat-export
+<div align="center">
 
-[English](./README.en.md)
+# dsh-chat-export
 
-DeepSeek Harness 会话插件。按消息选择需要保留的提问和回复，保存为文档或图片。功能来自 [dsh-timeline](https://github.com/houyanchao/dsh-timeline)，可以单独安装与配置。
+**[DeepSeek Harness](https://deepseek-harness.github.io/deepseek-harness/) 对话导出与截图插件**
 
-## 使用
+按消息选择 · 六种导出格式 · 数学公式渲染 · 高清截图
 
-- **导出对话**　点会话顶部的「导出」，勾选消息或「全选」。从某条回复底部点「导出」会预先选中这条回复。「全选」会尝试加载更早的消息，加载过程可以停止。
-- **选择格式**　支持 Markdown、TXT、JSON、CSV、PNG 和 PDF。可勾选导出时间和对话时间。PNG 和 PDF 可选配色，并渲染数学公式。PDF 使用浏览器打印窗口，选择「另存为 PDF」即可。
-- **截取原貌**　点回复下方的「截图」，勾选提问和回复，选择 1× 到 4× 清晰度，再复制或下载 PNG。较长截图会在需要时自动降低分辨率。
-- **调整设置**　在导出或截图面板点齿轮，或进入 DSH「设置 → 通用设置」，可分别开关两个入口。插件会记住上次使用的导出选项和截图清晰度。首次使用会从当前浏览器的 Timeline 设置中复制已有的导出偏好。
+[![DSH Plugin](https://img.shields.io/badge/DeepSeek%20Harness-plugin-6128FF)](https://deepseek-harness.github.io/deepseek-harness/)
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPL--3.0-blue.svg)](./LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/houyanchao/dsh-chat-export/pulls)
+[![GitHub stars](https://img.shields.io/github/stars/houyanchao/dsh-chat-export?style=social)](https://github.com/houyanchao/dsh-chat-export)
 
-dsh-timeline 运行时，导出和截图由 Timeline 接管，本插件自动暂停。禁用或卸载 Timeline 后，本插件会自动恢复，并沿用自己的导出偏好。
+**简体中文** | [English](./README.en.md)
 
-## 安装
+</div>
 
-在已安装 DSH CLI 和 pnpm 的终端运行：
+## 📖 dsh-chat-export 是什么？
 
-```sh
+dsh-chat-export 把 [dsh-timeline](https://github.com/houyanchao/dsh-timeline) 的导出和截图功能做成了独立插件。想把几条回复整理进笔记，可以勾选后导出 Markdown。想分享一段带公式的推导，可以把选中的提问和回复按聊天页样式截成一张图。
+
+如果同时启用 dsh-timeline，导出和截图会由 Timeline 接管。停用或卸载 Timeline 后，本插件会自动恢复。首次使用时，插件会从当前浏览器读取已有的 Timeline 导出偏好，之后独立保存设置。
+
+## ✨ 功能特性
+
+- 📋 **按消息选择** — 点会话顶部的「导出」，逐条勾选提问和回复，也可以从某条回复下方点「导出」直接选中它。「全选」会加载更早的消息，途中可点「停止加载」。
+- 📤 **六种导出格式** — Markdown 和 TXT 方便整理笔记，JSON 和 CSV 适合后续处理。选 PNG 或 PDF 可以保留公式排版，并从四种主题色中挑选一种。保存 PDF 时，在浏览器打印窗口选择「另存为 PDF」。
+- 📸 **按聊天页样式截图** — 点回复下方的「截图」，勾选消息并选择 1× 至 4× 清晰度，即可复制或下载 PNG。超出尺寸上限时，插件会自动降低清晰度。
+- ⚙️ **导出偏好** — 可选择是否附上导出时间和提问时间。插件会记住上次使用的格式、主题色、时间选项和截图清晰度。在选择面板点齿轮，或打开 DSH「设置 → 通用设置」，可分别开关导出和截图入口。
+
+## 📦 安装
+
+安装好 DSH CLI 和 pnpm 后，在终端运行以下命令。
+
+```bash
 dsh plugin --profile web add https://github.com/houyanchao/dsh-chat-export/archive/refs/heads/main.tar.gz
 dsh web
 ```
 
-## 本地开发
+> [!TIP]
+> 如果从源码运行 DSH，可以在 DSH 源码仓库根目录将命令开头的 `dsh` 换成 `pnpm dsh`。
 
-使用 Node.js 24.11 或更高版本，在本仓库根目录运行：
+## ⭐ 支持一下
 
-```sh
-npm ci
-npm run typecheck
-npm run bundle
-npm pack
-dsh plugin --profile web add "$PWD/dsh-chat-export-0.1.0.tgz"
-```
+如果你用这个插件整理笔记或分享对话，欢迎把它推荐给朋友，或在 GitHub 上点个 Star。[项目主页](https://github.com/houyanchao/dsh-chat-export)
 
-## 许可证
+## 📄 许可证
 
-本插件使用 [GPL-3.0-or-later](./LICENSE)。随包附有 [html-to-image](./src/client/conversationExport/vendor/LICENSE) 和 [Temml](./src/client/conversationExport/vendor/Temml-LICENSE) 的 MIT 许可证。
+本项目采用 [GPL-3.0-or-later](./LICENSE) 许可证。随包附有 [html-to-image](./src/client/conversationExport/vendor/LICENSE) 和 [Temml](./src/client/conversationExport/vendor/Temml-LICENSE) 的 MIT 许可证。
