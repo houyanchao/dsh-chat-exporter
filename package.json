@@ -1,6 +1,6 @@
 {
   "name": "dsh-chat-export",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "导出和截图插件，导出为 Markdown、TXT、JSON、CSV、PNG 或 PDF，也可生成高清截图。",
   "keywords": [
     "deepseek",
