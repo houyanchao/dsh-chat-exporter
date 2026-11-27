@@ -83,6 +83,7 @@ export declare class CEPngExporter {
     private imageOp;
     private paintImagePlaceholder;
     parseMarkdownBlocks(markdown: string): MarkdownBlock[];
+    private appendTextBlocks;
     /** 去除 markdown 内联标记（原 _cleanInline）。 */
     private cleanInline;
     private preloadImages;
